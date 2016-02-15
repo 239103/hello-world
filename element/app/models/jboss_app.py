@@ -7,7 +7,7 @@ db_path = os.path.join(basedir, '../data.sqlite')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 
-class jboss_app(db.Mode):
+class jboss_app(db.Model):
     __tablename__ = 'jboss_app'
     id = db.Column(db.Interger, primary_key=True)
     cmdb_name = db.Column(db.String(64), index=True)
