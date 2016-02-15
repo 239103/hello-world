@@ -2,11 +2,12 @@
 # -*- coding:utf-8 -*-
 
 from flask.ext.script import Manager, Server
-from app_templete import app
+from app import app
 
 manager = Manager(app)
 manager.add_command("runserver",
                     Server(host="0.0.0.0", port=5000, use_debugger=True))
 
 if __name__ == '__main__':
+    #db.create_all()
     manager.run()
