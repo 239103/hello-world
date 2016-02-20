@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from . import main
-from .. import db
-from . import models
+from flask.ext.restful import Api
+from .models import JbossAPI
 
-@main.route('/')
-def index():
-    return "Hello World!\n"
+def init_views(app):
+    api = Api(app)
+    api.add_resource(JbossAPI, '/jboss/<int:id>')

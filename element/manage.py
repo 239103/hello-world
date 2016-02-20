@@ -2,10 +2,11 @@
 # -*- coding:utf-8 -*-
 
 import os
-from app import create_app, db
-from app.main.models import User, Role
+
 from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
+
+from app import create_app, db
 
 app = create_app('default')
 manager = Manager(app)

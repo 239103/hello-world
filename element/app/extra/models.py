@@ -1,26 +1,10 @@
 # -*- coding:utf-8 -*-
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask.ext.restful import Resource
-from .. import db
+from app import db
 
-class JbossAPI(Resource):
-    def get(self, int_id):
-        query1 = Jboss()
-        return {'hello': 'jboss' + queryl}
-    
-class Jboss(db.Model):
-    __tablename__ = 'appjboss'
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(64), index = True)
-    
-    def __repr__(self):
-        return self.name
-        
-        
-
-class User(db.Model):
-    __tablename__ = 'users'
+class extra_User(db.Model):
+    __tablename__ = 'extra_users'
     id = db.Column(db.Integer, primary_key=True)
     emp_id = db.Column(db.Integer, unique=True)
     name = db.Column(db.Integer)
@@ -29,8 +13,8 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r Emp_ID %s>' %self.name %self.emp_id
 
-class Role(db.Model):
-    __tablename__ = 'roles'
+class extra_Role(db.Model):
+    __tablename__ = 'extra_roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     users = db.relationship('User', backref='role')
