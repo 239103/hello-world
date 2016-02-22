@@ -4,4 +4,4 @@ main = Blueprint('main', __name__)
 
 from . import views
 
-views.init_views(main)
+views.init_apis(main)
