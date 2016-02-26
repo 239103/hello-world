@@ -1,43 +1,46 @@
 # -*- coding:utf-8 -*-
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
-import os, sys
+import os
 
 class Jboss(object):
     '''Jboss application status'''
-    Status = {} 
+    Status = {'name': '',
+              'validation': False,
+              'basepath': '',
+              'deploypath': '',
+              'pidfile': '',
+              'pid' : 0,
+              }    
     
     def __init__(self, name):
+        '''initialize parameters'''
+        self.Status['validation'] = False
+        self.Status['name'] = name
+        self.Status['basepath'] = '/app/jboss/jboss-as/server/' + name
+        self.Status['deploypath'] = '/app/war/' + name
+        self.Status['pidfile'] = '/app/jboss/jboss-as/logs/' + name + '.pid'        
+        self.Status['pid'] = 0
+        
+        '''validate parameters'''
         self.validate(name)
         
     def validate(self, name):
-        self.Status = {'name': name,
-                       'validation': False,
-                       'basepath': '/app/jboss/jboss-as/server/' + name,
-                       'deploypath': '/app/war/' + name,
-                       'pidfile': '/app/jboss/jboss-as/logs/' + name + '.pid',
-                       'pid' : 0,
-                       }
-        
-        if os.path.exists(self.Status['basepath']):
-            self.Status['validation'] = True
-        
-        '''
         if os.path.exists(self.Status['basepath']):
             if os.path.exists(self.Status['deploypath']):
                 if os.path.exists(self.Status['pidfile']):
                     try:
                         with open(self.Status['pidfile']) as fd:
-                            self.Status['pid'] = fd.readline()
+                            pid = fd.readline()
+                            self.Status['pid'] = int(pid.strip())
                     except FileNotFoundError as e:
                         pass
-                    if int(self.Status['pid']) > 0:
+                    if self.Status['pid'] > 0:
                         try:
-                            os.getpid(self.Status['pid'])
-                            self.Status['validation'] = True
+                            if os.getpgid(self.Status['pid']) > 0:
+                                self.Status['validation'] = True
                         except:
                             pass
-        '''
+        
     def __repr__(self):
         return self.Status
+    
